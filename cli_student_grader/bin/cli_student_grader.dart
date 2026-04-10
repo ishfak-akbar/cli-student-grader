@@ -4,7 +4,7 @@ void main() {
   const appTitle = "Student Grader v1.0";
   List<Map<String, dynamic>> students = [];
   final Set<String> subjects = {"English", "Bangla", "Math", "Science"};
-  var option="";
+  var option = "";
   do {
     String menu =
         """
@@ -25,7 +25,18 @@ Choose an option:
 
     option = stdin.readLineSync() ?? "";
     switch (option) {
-      case "1":
+      case "1": //Adding student in option 1
+        print("Enter student name: ");
+        var name = stdin.readLineSync();
+        Map<String, dynamic> student = {
+          "name": name,
+          "scores": <int>[],
+          "subjects": {...subjects},
+          "bonus": null,
+          "comment": null,
+        };
+        students.add(student);
+        print("Student $name added successfully\n");
         break;
       case "2":
         break;
