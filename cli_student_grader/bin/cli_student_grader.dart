@@ -31,14 +31,32 @@ Choose an option:
         Map<String, dynamic> student = {
           "name": name,
           "scores": <int>[],
-          "subjects": {...subjects},
+          "subjects": <String>{...subjects},
           "bonus": null,
           "comment": null,
         };
         students.add(student);
         print("Student $name added successfully\n");
         break;
-      case "2":
+
+      case "2": //Recording scores
+        for (int i = 0; i < students.length; i++) {
+          print("${i + 1}. ${students[i]["name"]}");
+        }
+        print("Pick a student: ");
+        var studentIndex = int.parse(stdin.readLineSync() ?? "1") - 1;
+        var selectedStudent = students[studentIndex];
+        print("Subjects: ${selectedStudent["subjects"]}");
+        var score = -1;
+        while (score < 0 || score > 100) {
+          print("Enter a valid score (0-100): ");
+          score = int.parse(stdin.readLineSync() ?? "0");
+          if (score < 0 || score > 100) {
+            print("Invalid Score.");
+          }
+        }
+        selectedStudent["scores"].add(score);
+        print("Score added successfully");
         break;
       case "3":
         break;
