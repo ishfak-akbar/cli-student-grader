@@ -58,16 +58,51 @@ Choose an option:
         selectedStudent["scores"].add(score);
         print("Score added successfully");
         break;
-      case "3":
+
+      case "3": //Adding bonus points
+        for (int i = 0; i < students.length; i++) {
+          print("${i + 1}. ${students[i]["name"]}");
+        }
+        print("Pick a student: ");
+        var bonusIndex = int.parse(stdin.readLineSync() ?? "1") - 1;
+        var bonusStudent = students[bonusIndex];
+        print("Enter bonus points(1-10): ");
+        var bonusPoint = int.parse(stdin.readLineSync() ?? "0");
+        if (bonusStudent["bonus"] != null) {
+          print("Bonus already set to ${bonusStudent["bonus"]}.");
+        } else {
+          bonusStudent["bonus"] ??= bonusPoint;
+          print("Bonus of $bonusPoint added to ${bonusStudent["name"]}!");
+        }
         break;
-      case "4":
+
+      case "4": //Adding comment
+        for (int i = 0; i < students.length; i++) {
+          print("${i + 1}. ${students[i]["name"]}");
+        }
+        print("Pick a student: ");
+
+        var commentIndex = int.parse(stdin.readLineSync() ?? "1") - 1;
+        var commentStudent = students[commentIndex];
+
+        print("Enter a comment for ${commentStudent["name"]} :");
+        var comment = stdin.readLineSync();
+        commentStudent["comment"] = comment;
+        print("Comment: ");
+        String display =
+            commentStudent["comment"]?.toUpperCase() ?? "No comment provided";
+        print(display);
         break;
+
       case "5":
         break;
+
       case "6":
         break;
+
       case "7":
         break;
+
       case "8":
         print("Exiting...");
         break;
