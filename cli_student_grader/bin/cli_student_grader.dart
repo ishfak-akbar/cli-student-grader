@@ -94,7 +94,15 @@ Choose an option:
         print(display);
         break;
 
-      case "5":
+      case "5": //Viewing all students
+        for(var student in students){
+          var tags = [
+            student["name"],
+            "${student["scores"].length} scores",
+            if (student["bonus"] != null) "⭐ Has Bonus",
+          ];
+          print(tags);
+        }
         break;
 
       case "6":
