@@ -25,7 +25,7 @@ Choose an option:
 
     option = stdin.readLineSync() ?? "";
     switch (option) {
-      case "1": //Adding student in option 1
+      case "1": //Adding student
         print("Enter student name: ");
         var name = stdin.readLineSync();
         Map<String, dynamic> student = {
@@ -59,6 +59,8 @@ Choose an option:
         print("Score added successfully");
         break;
 
+
+
       case "3": //Adding bonus points
         for (int i = 0; i < students.length; i++) {
           print("${i + 1}. ${students[i]["name"]}");
@@ -75,6 +77,8 @@ Choose an option:
           print("Bonus of $bonusPoint added to ${bonusStudent["name"]}!");
         }
         break;
+
+
 
       case "4": //Adding comment
         for (int i = 0; i < students.length; i++) {
@@ -94,8 +98,10 @@ Choose an option:
         print(display);
         break;
 
+
+
       case "5": //Viewing all students
-        for(var student in students){
+        for (var student in students) {
           var tags = [
             student["name"],
             "${student["scores"].length} scores",
@@ -105,11 +111,71 @@ Choose an option:
         }
         break;
 
-      case "6":
+
+
+      case "6": //Generating Report Card
+        for (int i = 0; i < students.length; i++) {
+          print("${i + 1}. ${students[i]["name"]}");
+        }
+        print("Pick a student: ");
+
+        var scoreIndex = int.parse(stdin.readLineSync() ?? "1") - 1;
+        var scoreStudent = students[scoreIndex];
+        double sum = 0;
+        for (int i = 0; i < scoreStudent["scores"].length; i++) {
+          sum += scoreStudent["scores"][i];
+        }
+        var rawAvg = sum / scoreStudent["scores"].length;
+        var finalAvg = rawAvg + (scoreStudent["bonus"] ?? 0);
+        if (finalAvg > 100) {
+          finalAvg = 100;
+        }
+
+        String grade;
+        if (finalAvg >= 90) {
+          grade = "A";
+        } else if (finalAvg >= 80) {
+          grade = "B";
+        } else if (finalAvg >= 70) {
+          grade = "C";
+        } else if (finalAvg >= 60) {
+          grade = "D";
+        } else {
+          grade = "F";
+        }
+
+        String feedback = switch (grade) {
+          "A" => "Outstanding performance!",
+          "B" => "Good work, keep it up!",
+          "C" => "Satisfactory. Room to improve.",
+          "D" => "Needs improvement.",
+          "F" => "Failing. Please seek help.",
+          _ => "Unknown grade.",
+        };
+        var displayComment = scoreStudent["comment"]?.toUpperCase() ?? "No comment provided";
+        var displayBonus = scoreStudent["bonus"] ?? 0;
+        print("""
+╔════════════════════════════════════╗
+║            REPORT CARD             ║
+╠════════════════════════════════════╣
+║  Name:    ${scoreStudent["name"]}${" "*(25-scoreStudent["name"].toString().length)}║
+║  Scores:  ${scoreStudent["scores"]}${" "*(25-scoreStudent["scores"].toString().length)}║
+║  Bonus:   +$displayBonus${" "*(24-displayBonus.toString().length)}║
+║  Average: $finalAvg${" "*(25-finalAvg.toString().length)}║
+║  Grade:   $grade${" "*(25-grade.length)}║
+║  Comment: $displayComment${" "*(25-displayComment.toString().length)}║
+╚════════════════════════════════════╝
+$feedback
+""");
         break;
 
-      case "7":
+
+
+      case "7": //Class summary
+        
         break;
+
+
 
       case "8":
         print("Exiting...");
