@@ -59,8 +59,6 @@ Choose an option:
         print("Score added successfully");
         break;
 
-
-
       case "3": //Adding bonus points
         for (int i = 0; i < students.length; i++) {
           print("${i + 1}. ${students[i]["name"]}");
@@ -77,8 +75,6 @@ Choose an option:
           print("Bonus of $bonusPoint added to ${bonusStudent["name"]}!");
         }
         break;
-
-
 
       case "4": //Adding comment
         for (int i = 0; i < students.length; i++) {
@@ -98,8 +94,6 @@ Choose an option:
         print(display);
         break;
 
-
-
       case "5": //Viewing all students
         for (var student in students) {
           var tags = [
@@ -111,14 +105,11 @@ Choose an option:
         }
         break;
 
-
-
       case "6": //Generating Report Card
         for (int i = 0; i < students.length; i++) {
           print("${i + 1}. ${students[i]["name"]}");
         }
         print("Pick a student: ");
-
         var scoreIndex = int.parse(stdin.readLineSync() ?? "1") - 1;
         var scoreStudent = students[scoreIndex];
         double sum = 0;
@@ -158,27 +149,94 @@ Choose an option:
 ╔════════════════════════════════════╗
 ║            REPORT CARD             ║
 ╠════════════════════════════════════╣
-║  Name:    ${scoreStudent["name"]}${" "*(25-scoreStudent["name"].toString().length)}║
-║  Scores:  ${scoreStudent["scores"]}${" "*(25-scoreStudent["scores"].toString().length)}║
-║  Bonus:   +$displayBonus${" "*(24-displayBonus.toString().length)}║
-║  Average: $finalAvg${" "*(25-finalAvg.toString().length)}║
-║  Grade:   $grade${" "*(25-grade.length)}║
-║  Comment: $displayComment${" "*(25-displayComment.toString().length)}║
+║  Name:    ${scoreStudent["name"]}${" " * (25 - scoreStudent["name"].toString().length)}║
+║  Scores:  ${scoreStudent["scores"]}${" " * (25 - scoreStudent["scores"].toString().length)}║
+║  Bonus:   +$displayBonus${" " * (24 - displayBonus.toString().length)}║
+║  Average: $finalAvg${" " * (25 - finalAvg.toString().length)}║
+║  Grade:   $grade${" " * (25 - grade.length)}║
+║  Comment: $displayComment${" " * (25 - displayComment.toString().length)}║
 ╚════════════════════════════════════╝
 $feedback
 """);
         break;
 
+      case "7": //Class Summary
+        double avgTotal = 0;
+        double classAvg;
+        double highestAverage = 0;
+        double lowestAverage = 101;
+        int passCount = 0;
 
+        Set<String> uniqueGrades = {};
 
-      case "7": //Class summary
+        var totalStudents = students.length;
+
+        for (var s in students) {
+          double sum = 0;
+          for (int i = 0; i < s["scores"].length; i++) {
+            sum += s["scores"][i];
+          }
+          double avg = sum / s["scores"].length;
+          avg += (s["bonus"] ?? 0);
+          if (avg > 100) {
+            avg = 100;
+          }
+
+          if (highestAverage < avg) {
+            highestAverage = avg;
+          }
+          if (lowestAverage > avg) {
+            lowestAverage = avg;
+          }
+
+          avgTotal += avg;
+
+          if (s["scores"].isNotEmpty && avg >= 60) {
+            passCount++;
+          }
+
+          String grade;
+          if (avg >= 90) {
+            grade = "A";
+          } else if (avg >= 80) {
+            grade = "B";
+          } else if (avg >= 70) {
+            grade = "C";
+          } else if (avg >= 60) {
+            grade = "D";
+          } else {
+            grade = "F";
+          }
+          uniqueGrades.add(grade);
+        }
+
+        var summaryLines = [
+          for (var s in students) "${s["name"]}:  ${s["scores"]}",
+        ];
+        print("Student Scores: ");
+        for (var line in summaryLines) {
+          print(line);
+        }
+
+        classAvg = avgTotal / totalStudents;
+        print(
+          "\n"
+          """
+══════════ Class Summary ══════════
+Total Students  : $totalStudents
+Class Average   : $classAvg
+Highest Average : $highestAverage
+Lowest Average  : $lowestAverage
+Passes Student  : $passCount
+Unique Grades   : $uniqueGrades
+═══════════════════════════════════
         
+        """,
+        );
         break;
 
-
-
-      case "8":
-        print("Exiting...");
+      case "8": //Exit
+        print("Exiting.\n");
         break;
       default:
         print("Invalid option. Try again.");
