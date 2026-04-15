@@ -24,7 +24,8 @@ Choose an option: """;
 
     option = stdin.readLineSync() ?? "";
     switch (option) {
-      case "1": //Adding student
+      //Add student : Creating a new student record and initializing empty fields using Map
+      case "1": 
         print("Enter student name: ");
         var name = stdin.readLineSync();
         Map<String, dynamic> student = {
@@ -38,7 +39,8 @@ Choose an option: """;
         print("Student $name added successfully\n");
         break;
 
-      case "2": //Recording scores
+      //Record score : Selecting a student, validate and store their subject score
+      case "2": 
         for (int i = 0; i < students.length; i++) {
           print("${i + 1}. ${students[i]["name"]}");
         }
@@ -58,7 +60,8 @@ Choose an option: """;
         print("Score added successfully");
         break;
 
-      case "3": //Adding bonus points
+      //Add bonus points : Assigning bonus points to a student (only if not already set)
+      case "3": 
         for (int i = 0; i < students.length; i++) {
           print("${i + 1}. ${students[i]["name"]}");
         }
@@ -75,7 +78,8 @@ Choose an option: """;
         }
         break;
 
-      case "4": //Adding comment
+      //Add comment : Storing teacher feedback comment for the selected student
+      case "4": 
         for (int i = 0; i < students.length; i++) {
           print("${i + 1}. ${students[i]["name"]}");
         }
@@ -93,7 +97,8 @@ Choose an option: """;
         print(display);
         break;
 
-      case "5": //Viewing all students
+      //View all students : Displaying all students with score count and bonus status
+      case "5": 
         for (var student in students) {
           var tags = [
             student["name"],
@@ -104,7 +109,8 @@ Choose an option: """;
         }
         break;
 
-      case "6": //Generating Report Card
+      //View report card : Generating report card by calculating average and assigning a grade
+      case "6": 
         for (int i = 0; i < students.length; i++) {
           print("${i + 1}. ${students[i]["name"]}");
         }
@@ -164,7 +170,8 @@ $feedback
 """);
         break;
 
-      case "7": //Class Summary
+      //Class summary : Computing total students in a class including averages, grades, and pass count
+      case "7": 
         double avgTotal = 0;
         double classAvg;
         double highestAverage = 0;
@@ -239,7 +246,8 @@ Unique Grades   : $uniqueGrades
         );
         break;
 
-      case "8": //Exit
+      //Exit : Exiting the application 
+      case "8": 
         print("Exiting.\n");
         break;
       default:
