@@ -19,8 +19,7 @@ void main() {
 7. Class Summary
 8. Exit
 
-Choose an option:
-""";
+Choose an option: """;
     print(menu);
 
     option = stdin.readLineSync() ?? "";
@@ -32,8 +31,8 @@ Choose an option:
           "name": name,
           "scores": <int>[],
           "subjects": <String>{...subjects},
-          "bonus": null,
-          "comment": null,
+          "bonus": null as int?,
+          "comment": null as String?,
         };
         students.add(student);
         print("Student $name added successfully\n");
@@ -112,6 +111,11 @@ Choose an option:
         print("Pick a student: ");
         var scoreIndex = int.parse(stdin.readLineSync() ?? "1") - 1;
         var scoreStudent = students[scoreIndex];
+
+        if (scoreStudent["scores"].isEmpty) {
+          print("No scores were added. Add scores to generate report!\n");
+          break;
+        }
         double sum = 0;
         for (int i = 0; i < scoreStudent["scores"].length; i++) {
           sum += scoreStudent["scores"][i];
